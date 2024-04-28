@@ -1,4 +1,4 @@
-import { useLayoutEffect, React } from "react";
+import { useLayoutEffect, useContext, React } from "react";
 import {
   View,
   Text,
@@ -12,27 +12,36 @@ import MealDetails from "../components/MealDetails";
 import Subtitle from "../components/MealDetail/Subtitle";
 import List from "../components/MealDetail/List";
 import IconButton from "../components/IconButton";
+import { FavoritesContext } from "../store/context/favorites-context";
 
 const MealDetailScreen = ({ route, navigation }) => {
+  const favoriteMealsCtx = useContext(FavoritesContext);
+
   const mealId = route.params.mealId;
 
   const selectedMeal = MEALS.find((meal) => meal.id === mealId);
 
-  function headerRightPressHandler() {
-    console.log("Mark as favorite");
+  const isFavorite = favoriteMealsCtx.ids.includes(mealId);
+
+  function changeFavoriteStatusHandler() {
+    if (isFavorite) {
+      favoriteMealsCtx.removeFavorite(mealId);
+    } else {
+      favoriteMealsCtx.addFavorite(mealId);
+    }
   }
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <IconButton
-          icon="star"
-          color="white"
-          onPress={headerRightPressHandler}
+          icon={isFavorite ? "star" : "star-outline"}
+          color="yellow"
+          onPress={changeFavoriteStatusHandler}
         />
       ),
     });
-  }, [navigation, headerRightPressHandler]);
+  }, [navigation, changeFavoriteStatusHandler]);
 
   return (
     <ScrollView style={styles.rootContainer}>
