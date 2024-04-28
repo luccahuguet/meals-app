@@ -33,5 +33,6 @@ const styles = StyleSheet.create({
   },
   noFavoritesText: {
     fontSize: 18,
+    color: "white",
   },
 });
