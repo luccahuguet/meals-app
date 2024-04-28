@@ -8,7 +8,7 @@ import {
   Platform,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import MealDetails from "./MealDetails";
+import MealDetails from "../MealDetails";
 
 const MealItem = ({
   id,
@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
     margin: 8,
   },
   mealItem: {
+    minWidth: "80%",
     backgroundColor: "white",
     margin: 16,
     borderRadius: 8,
